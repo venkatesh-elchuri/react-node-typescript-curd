@@ -48,8 +48,7 @@ const createOrUpdateUser = async (userObj:UserObj) =>{
 
 const deleteuser = async (id:number) =>{
   try{
-    let res;
-      res = await request(`${DELETE_USER_INFO}${id}`,{method:'delete'});
+      await request(`${DELETE_USER_INFO}${id}`,{method:'delete'});
   }catch(err){
     console.log("err",err)
   }
@@ -72,7 +71,7 @@ function UserInfoProvider({ children } :  {children: React.ReactNode}){
     const updateList = async (newObj:UserObj) =>{
         const updatedObj = await createOrUpdateUser(newObj);
         if(newObj.id){
-            let selectdIdx =  usersList.findIndex((_item)=>_item.id == newObj.id);
+            let selectdIdx =  usersList.findIndex((_item)=>_item.id === newObj.id);
             usersList[selectdIdx] = {...usersList[selectdIdx] ,...updatedObj}
             updateUserList([...usersList]);
        }else{
@@ -84,7 +83,7 @@ function UserInfoProvider({ children } :  {children: React.ReactNode}){
     const onDeleteUser = async (id:number | undefined)=>{
         if(id){
             await deleteuser(id);
-            let selectdIdx =  usersList.findIndex((_item)=>_item.id == id);
+            let selectdIdx =  usersList.findIndex((_item)=>_item.id = id);
             usersList.splice(selectdIdx,1);
             updateUserList([...usersList]);
         }

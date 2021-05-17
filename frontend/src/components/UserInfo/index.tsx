@@ -1,5 +1,5 @@
 import React,{ useContext }  from 'react';
-import { Box,Card,CardHeader,CardBody,ResponsiveContext,Grid } from 'grommet';
+import { Box,Card,CardHeader,CardBody,Grid } from 'grommet';
 import {UserObj} from '../../utils/interface';
 import {UserInfoContext} from '../../utils/userInfoContext';
 import { Edit,Trash } from 'grommet-icons';
@@ -9,7 +9,7 @@ type UnserInfoProps = {
 }
 
 function UserInfo(Props: UnserInfoProps){
-    const {usersList,updateList,onEditUser,onDeleteUser} = useContext(UserInfoContext);
+    const {usersList,onEditUser,onDeleteUser} = useContext(UserInfoContext);
     const {toggleFormStatus} = Props;
     const getUserInfoCards = (usersList:UserObj[]) =>{
         return usersList.map((_userInfo:UserObj)=>{

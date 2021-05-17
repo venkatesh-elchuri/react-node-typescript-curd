@@ -15,9 +15,8 @@ function UserForm(props: Props) {
     const { toggleFormStatus } = props;
     useEffect(()=>{
         let selectedItem = usersList.find((_item)=>{
-            return _item.id == activeUserId;
+            return _item.id === activeUserId;
         });
-        console.log("selectedItem",selectedItem,activeUserId)
         updateFormvalues({...selectedItem || formInitialState});
     },[activeUserId])
     return (
