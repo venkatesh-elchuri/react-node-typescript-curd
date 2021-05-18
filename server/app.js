@@ -6,10 +6,6 @@ const port = 3001;
 
 app.use(express.json());
 app.use(cors());
-app.get('/', (req, res) => {
-    res.send('Hello World!')
-  
-});
 
 app.get('/user/list',(req,res)=>{
     const list = utils.getUserInfo();
@@ -51,7 +47,6 @@ app.post('/user/update/',(req,res)=>{
 
 app.delete('/user/:id',(req,res)=>{
     let {id} = req.params;
-    console.log("id",id)
     if(id){
         const list = utils.getUserInfo();
         let idx = list.findIndex((_item)=>{

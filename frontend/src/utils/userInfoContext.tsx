@@ -33,13 +33,12 @@ export type usersContextState = {
 const createOrUpdateUser = async (userObj:UserObj) =>{
   try{
     let res;
-    // if(!userObj.id){
       res = await request(userObj.id ? UPDATE_USER_INFO : CREATE_USER_INFO,{method:'post',body:JSON.stringify(userObj),headers: [
         ["Content-Type", "application/json"],
         ['Access-Control-Allow-Headers', '*']
       ]});
-      return res.user;
-    // }
+
+      return res.success ? res.user : null;
   }catch(err){
     console.log("err",err)
   }
@@ -70,6 +69,10 @@ function UserInfoProvider({ children } :  {children: React.ReactNode}){
 
     const updateList = async (newObj:UserObj) =>{
         const updatedObj = await createOrUpdateUser(newObj);
+		if(!updatedObj){
+			console.log('Failed to create record');
+			return;
+		}
         if(newObj.id){
             let selectdIdx =  usersList.findIndex((_item)=>_item.id === newObj.id);
             usersList[selectdIdx] = {...usersList[selectdIdx] ,...updatedObj}
@@ -90,16 +93,16 @@ function UserInfoProvider({ children } :  {children: React.ReactNode}){
     }
 
     useEffect(() => {
-      const getData = async () =>{
-        try{
-          const {users} = await request(GET_USER_LIST);
-          updateUserList(users);
-        }catch(err){
-          console.log(err);
-        }
-      } 
-      getData();
-    },[])
+		const getData = async () =>{
+			try{
+				const {users} = await request(GET_USER_LIST);
+				updateUserList(users);
+			}catch(err){
+				console.log(err);
+			}
+		} 
+		getData();
+	},[])
   
     return (
       <UserInfoContext.Provider

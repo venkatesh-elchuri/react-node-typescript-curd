@@ -13,12 +13,19 @@ function UserForm(props: Props) {
     const [formvalues,updateFormvalues] = useState(formInitialState);
     const {updateList,activeUserId,usersList,onEditUser} = useContext(UserInfoContext);
     const { toggleFormStatus } = props;
+    
     useEffect(()=>{
-        let selectedItem = usersList.find((_item)=>{
-            return _item.id === activeUserId;
-        });
-        updateFormvalues({...selectedItem || formInitialState});
-    },[activeUserId])
+        const getSeletedData = () => {
+            if(activeUserId){
+                let selectedItem = usersList.find((_item)=>{
+                    return _item.id === activeUserId;
+                });
+                updateFormvalues({...selectedItem || formInitialState});
+            }
+        }
+        getSeletedData();
+
+    },[activeUserId,usersList])
     return (
         <Box>
             <Layer
@@ -30,7 +37,7 @@ function UserForm(props: Props) {
                     value={formvalues}
                     onChange={nextValue => updateFormvalues(nextValue)}
                     onReset={() => updateFormvalues(formInitialState)}
-                    onSubmit={({ value }) => {updateList({...value,id:activeUserId}); {toggleFormStatus(false);onEditUser(undefined)}; }}
+                    onSubmit={({ value }) => {updateList({...value,id:activeUserId});toggleFormStatus(false);onEditUser(undefined); }}
                 >
                     <FormField name="fname" htmlFor="text-input-id" label="First Name">
                         <TextInput id="text-input-id" name="fname" />
