@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "concurrently \"cd server && npm  start\" \"cd ./frontend && npm start",
-    "instalall": "concurrently \"cd server && npm  install\" \"cd ./frontend && npm install"
+    "instalall": "concurrently \"cd server && npm  install\" \"cd ./frontend && npm install",
+    "start:prod": "cd server && npm  start"
   },
   "author": "",
   "license": "ISC",

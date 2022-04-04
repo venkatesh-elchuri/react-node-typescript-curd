@@ -1,11 +1,17 @@
 const express = require('express');
 const cors = require('cors');
+const path = require("path");
+
 const utils = require('./utils/user');
 const app = express();
 const port = 3001;
 
 app.use(express.json());
 app.use(cors());
+
+app.use(express.static(path.join(__dirname, "..","frontend", "build")));
+// app.use(express.static(__dirname));
+
 
 app.get('/user/list',(req,res)=>{
     const list = utils.getUserInfo();
@@ -58,6 +64,11 @@ app.delete('/user/:id',(req,res)=>{
     }else{
         res.status(400).send({error : true,msg : "Missing required Data"});
     }
+});
+
+
+app.get("/*", function(req, res) {
+    res.sendFile(path.join(__dirname, "index.html"));
 });
   
 app.listen(port, () => {
